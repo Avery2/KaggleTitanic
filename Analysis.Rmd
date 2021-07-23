@@ -19,7 +19,10 @@ theme_set(theme_bw())
 ```
 
 ```{r import}
-train <- read_csv("titanic/train.csv")
-train
+train <- read_csv("titanic/train.csv", col_types = cols())
+# Summary
+train %>% summary()
+# Number of missing values
+train %>% sapply(function(x) sum(is.na(x)))
 ```
 
