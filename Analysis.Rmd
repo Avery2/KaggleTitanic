@@ -12,6 +12,7 @@ output:
     code_folding: hide
 ---
 
+# Setup
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
@@ -19,21 +20,87 @@ library(reticulate)
 theme_set(theme_bw())
 ```
 
+## Import
+
 ```{r import}
 train <- read_csv("titanic/train.csv", col_types = cols())
+```
+
+## Exporation
+
+```{r summary}
 # Summary
 train %>% summary()
+train %>% nrow()
 # Number of missing values
 train %>% sapply(function(x) sum(is.na(x)))
 
 train %>% filter(Sex == "female") %>% summary()
 train %>% filter(Sex == "male") %>% summary()
+
+train %>% colnames()
 ```
 
-```{r python-code}
-# py_install("requests")
-# py_install("pandas")
+### Test
+
+```{r test-exploration}
+test <- read_csv("titanic/test.csv", col_types = cols())
+# Summary
+test %>% summary()
+test %>% nrow()
+# Number of missing values
+test %>% sapply(function(x)
+  sum(is.na(x)))
+```
+
+### Train
+
+```{r train-exploration}
+# train %>% 
+#   filter(Sex == "male", Pclass == 3) %>% 
+#   nrow()
+# 
+# train %>% 
+#   filter(Sex == "male", Pclass == 3, Survived == 1) %>% 
+#   nrow()
+#
+# train %>% 
+#   filter(Sex == "male", Pclass == 3, Survived == 1, Age > 18) %>% 
+#   nrow()
+```
+
+## Python
+
+### Install Packages
+
+```{r python-code-install}
+py_install("numpy")
+py_install("pandas")
+py_install("sklearn", pip=TRUE)
+```
+
+### Run
+
+```{r python-code-run}
 # py_run_string("print(\"hello world\")")
 py_run_file("ClassifyPassenger.py")
 ```
+
+## Results
+
+```{r}
+
+pred = read_csv("my_submission.csv", col_types = cols())
+pred
+
+
+
+```
+
+
+
+
+
+
+
 
