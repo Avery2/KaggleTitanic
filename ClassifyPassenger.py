@@ -57,6 +57,7 @@ print(f"SCALE:\n{pd.DataFrame(X_train)}")
 model = MLPClassifier(solver='lbfgs', alpha=1e-5, hidden_layer_sizes=(5, 10), random_state=1, max_iter=100)
 model.fit(X_train, y)
 predictions = model.predict(X_test)
+
 output = pd.DataFrame({'PassengerId': test_data.PassengerId, 'Survived': predictions})
 output.to_csv('my_submission.csv', index=False)
 
